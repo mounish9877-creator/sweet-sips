@@ -1,0 +1,31 @@
+document.getElementById("submitOrder").addEventListener("click", function(e) {
+    e.preventDefault(); // prevent form from reloading page
+
+    const orderData = {
+        customerName: document.getElementById("customerName").value,
+        phoneNumber: document.getElementById("phoneNumber").value,
+        drink: document.getElementById("drink").value,
+        milkOption: document.getElementById("milkOption").value,
+        pickupType: document.getElementById("pickupType").value,
+        pickupDate: document.getElementById("pickupDate").value,
+        pickupTime: document.getElementById("pickupTime").value,
+        specialInstructions: document.getElementById("specialInstructions").value
+    };
+
+    fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert("Order placed successfully!");
+        console.log(data);
+        // Optional: Reset form
+        document.querySelector("form").reset();
+    })
+    .catch(error => {
+        alert("Error submitting order.");
+        console.error(error);
+    });
+});
